@@ -1,4 +1,4 @@
-export type Note = {
+export type Task = {
 	id: string;
 	title: string;
 	content: string;
@@ -7,6 +7,6 @@ export type Note = {
 	completed: boolean;
 };
 
-export type NotesOfUser = {
-	[userId: number]: Note[];
+export type TasksOfUser = {
+	[userId: number]: Task[];
 };

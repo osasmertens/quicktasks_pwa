@@ -1,24 +1,24 @@
 import { Box, Button, TextField } from "@mui/material";
 import { FC, useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
-import { Note } from "../../../constants/notes";
+import { Task } from "../../../constants/tasks";
 
 export type TitleInputProps = {
-	note: Note;
-	setNote: React.Dispatch<React.SetStateAction<Note>>;
+	task: Task;
+	setTask: React.Dispatch<React.SetStateAction<Task>>;
 	onSave: () => void;
 };
 
-export const TitleInput: FC<TitleInputProps> = ({ note, setNote, onSave }) => {
+export const TitleInput: FC<TitleInputProps> = ({ task, setTask, onSave }) => {
 	return (
 		<Box display="flex" width={1} alignItems="center">
 			<Box flexGrow={1} p={1}>
 				<TextField
 					fullWidth
 					label="Title"
-					value={note.title}
+					value={task.title}
 					onChange={(event) =>
-						setNote((prev) => ({
+						setTask((prev) => ({
 							...prev,
 							title: event.target.value,
 						}))

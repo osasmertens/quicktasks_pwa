@@ -2,16 +2,16 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
-import { getNotesOfUser } from "./helpers/getNotesOfUser";
+import { getTasksOfUser } from "./helpers/getTasksOfUser";
 import { useUserContext } from "../../providers/UserProvider";
-import { NoteDetail } from "./partials/NoteDetail";
+import { TaskDetail } from "./partials/TaskDetail";
 import { isThisWeek, isToday } from "./helpers/dateFunctions";
 
 export const HomePage: FC = () => {
 	const navigate = useNavigate();
 	const { user } = useUserContext();
 
-	const notes = getNotesOfUser(user?.userId ?? 0);
+	const tasks = getTasksOfUser(user?.userId ?? 0);
 	//console.log(notes);
 
 	return (
@@ -42,14 +42,14 @@ export const HomePage: FC = () => {
 					</Button>
 				</Box>
 				<Box display="flex" flexDirection="column" marginTop={2}>
-					{notes
-						.filter((note) => isToday(note.dueDate) && !note.completed)
-						.map((note) => (
-							<Link style={{ textDecoration: 0 }} to={`/edit/${note.id}`}>
-								<NoteDetail
-									key={note.id}
-									note={note}
-									today={isToday(note.dueDate)}
+					{tasks
+						.filter((task) => isToday(task.dueDate) && !task.completed)
+						.map((task) => (
+							<Link style={{ textDecoration: 0 }} to={`/edit/${task.id}`}>
+								<TaskDetail
+									key={task.id}
+									task={task}
+									today={isToday(task.dueDate)}
 								/>
 							</Link>
 						))}
@@ -58,14 +58,14 @@ export const HomePage: FC = () => {
 					<Typography variant="h6">This week</Typography>
 				</Box>
 				<Box display="flex" flexDirection="column" marginTop={2}>
-					{notes
-						.filter((note) => isThisWeek(note.dueDate) && !note.completed)
-						.map((note) => (
-							<Link style={{ textDecoration: 0 }} to={`/edit/${note.id}`}>
-								<NoteDetail
-									key={note.id}
-									note={note}
-									today={isToday(note.dueDate)}
+					{tasks
+						.filter((task) => isThisWeek(task.dueDate) && !task.completed)
+						.map((task) => (
+							<Link style={{ textDecoration: 0 }} to={`/edit/${task.id}`}>
+								<TaskDetail
+									key={task.id}
+									task={task}
+									today={isToday(task.dueDate)}
 								/>
 							</Link>
 						))}
@@ -74,19 +74,19 @@ export const HomePage: FC = () => {
 					<Typography variant="h6">Remaining tasks</Typography>
 				</Box>
 				<Box display="flex" flexDirection="column" marginTop={2}>
-					{notes
+					{tasks
 						.filter(
-							(note) =>
-								!isToday(note.dueDate) &&
-								!isThisWeek(note.dueDate) &&
-								!note.completed
+							(task) =>
+								!isToday(task.dueDate) &&
+								!isThisWeek(task.dueDate) &&
+								!task.completed
 						)
-						.map((note) => (
-							<Link style={{ textDecoration: 0 }} to={`/edit/${note.id}`}>
-								<NoteDetail
-									key={note.id}
-									note={note}
-									today={isToday(note.dueDate)}
+						.map((task) => (
+							<Link style={{ textDecoration: 0 }} to={`/edit/${task.id}`}>
+								<TaskDetail
+									key={task.id}
+									task={task}
+									today={isToday(task.dueDate)}
 								/>
 							</Link>
 						))}

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Note } from "../../../constants/notes";
+import { Task } from "../../../constants/tasks";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
@@ -7,18 +7,18 @@ import { Box, Typography } from "@mui/material";
 import moment from "moment";
 
 export type DueDateInputProps = {
-	note: Note;
-	setNote: React.Dispatch<React.SetStateAction<Note>>;
+	task: Task;
+	setTask: React.Dispatch<React.SetStateAction<Task>>;
 };
 
-export const DueDateInput: FC<DueDateInputProps> = ({ note, setNote }) => {
+export const DueDateInput: FC<DueDateInputProps> = ({ task, setTask }) => {
 	const [selectedDate, setSelectedDate] = useState<Date | null>(
-		new Date(note.dueDate)
+		new Date(task.dueDate)
 	);
 
 	const handleDateChange = (newDate: Date | null) => {
 		setSelectedDate(newDate);
-		setNote((prev) => ({
+		setTask((prev) => ({
 			...prev,
 			dueDate: newDate === null ? "" : newDate.toDateString(),
 		}));

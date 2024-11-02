@@ -1,23 +1,23 @@
 import React, { FC } from "react";
-import { Note } from "../../../constants/notes";
+import { Task } from "../../../constants/tasks";
 import { Box, Checkbox, Typography } from "@mui/material";
 
 export type TaskCompleteInputProps = {
-	note: Note;
-	setNote: React.Dispatch<React.SetStateAction<Note>>;
+	task: Task;
+	setTask: React.Dispatch<React.SetStateAction<Task>>;
 };
 
 export const TaskCompleteInput: FC<TaskCompleteInputProps> = ({
-	note,
-	setNote,
+	task,
+	setTask,
 }) => {
 	return (
 		<Box display="flex" width={1} alignItems="center" gap={1}>
 			<Typography fontWeight="bolt">Task completed?: </Typography>
 			<Checkbox
-				checked={note.completed}
+				checked={task.completed}
 				onChange={(event) =>
-					setNote((prev) => ({
+					setTask((prev) => ({
 						...prev,
 						completed: event.target.checked,
 					}))

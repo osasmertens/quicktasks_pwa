@@ -1,53 +1,53 @@
 import { Box, Card } from "@mui/material";
 import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Note, NotesOfUser } from "../../constants/notes";
+import { Task, TasksOfUser } from "../../constants/tasks";
 import "@mdxeditor/editor/style.css";
-import { getNote } from "./helpers/getNote";
+import { getTask } from "./helpers/getTask";
 import { MDXEditor } from "@mdxeditor/editor";
 import { ALL_PLUGINS } from "./helpers/editorPlugins";
 import { TitleInput } from "./partials/TitleInput";
 import { LabelsInput } from "./partials/LabelsInput";
 import { useUserContext } from "../../providers/UserProvider";
-import { getNotesOfUser } from "../home/helpers/getNotesOfUser";
+import { getTasksOfUser } from "../home/helpers/getTasksOfUser";
 import { DueDateInput } from "./partials/DueDateInput";
 import { TaskCompleteInput } from "./partials/TaskCompleteInput";
 
 export const EditPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
 	const { user } = useUserContext();
-	const [note, setNote] = useState<Note>(getNote(id, user?.userId ?? 0));
-	const userNotes = getNotesOfUser(user?.userId ?? 0);
+	const [task, setTask] = useState<Task>(getTask(id, user?.userId ?? 0));
+	const userNotes = getTasksOfUser(user?.userId ?? 0);
 	const navigate = useNavigate();
 
 	function onSave(): void {
 		const userId = user?.userId ?? "0";
-		const storedNotes = JSON.parse(
-			localStorage.getItem("notes") || "{}"
-		) as NotesOfUser;
+		const storedTasks = JSON.parse(
+			localStorage.getItem("tasks") || "{}"
+		) as TasksOfUser;
 
 		if (
-			storedNotes[userId] &&
-			storedNotes[userId].find((existingNote) => existingNote.id === note.id)
+			storedTasks[userId] &&
+			storedTasks[userId].find((existingTask) => existingTask.id === task.id)
 		) {
-			const index = storedNotes[userId].findIndex(
-				(existingNote) => note.id === existingNote.id
+			const index = storedTasks[userId].findIndex(
+				(existingTask) => task.id === existingTask.id
 			);
-			storedNotes[userId][index] = note;
+			storedTasks[userId][index] = task;
 		}
 
-		if (!storedNotes[userId]) {
-			storedNotes[userId] = [note];
+		if (!storedTasks[userId]) {
+			storedTasks[userId] = [task];
 		}
 
 		if (
-			storedNotes[userId] &&
-			!storedNotes[userId].find((existingNote) => existingNote.id === note.id)
+			storedTasks[userId] &&
+			!storedTasks[userId].find((existingTask) => existingTask.id === task.id)
 		) {
-			storedNotes[userId].push(note);
+			storedTasks[userId].push(task);
 		}
 
-		localStorage.setItem("notes", JSON.stringify(storedNotes));
+		localStorage.setItem("tasks", JSON.stringify(storedTasks));
 		navigate("/", { replace: true });
 	}
 
@@ -60,15 +60,15 @@ export const EditPage: FC = () => {
 			p={2}
 		>
 			<Box display="flex" flexDirection="column" flexGrow={1} width={1}>
-				<TitleInput note={note} setNote={setNote} onSave={onSave} />
-				<LabelsInput note={note} setNote={setNote} />
-				<DueDateInput note={note} setNote={setNote} />
-				<TaskCompleteInput note={note} setNote={setNote} />
+				<TitleInput task={task} setTask={setTask} onSave={onSave} />
+				<LabelsInput task={task} setTask={setTask} />
+				<DueDateInput task={task} setTask={setTask} />
+				<TaskCompleteInput task={task} setTask={setTask} />
 				<Box flexGrow={1} marginTop={2}>
 					<Card sx={{ height: 1 }}>
 						<MDXEditor
-							markdown={note.content}
-							onChange={(content) => setNote((prev) => ({ ...prev, content }))}
+							markdown={task.content}
+							onChange={(content) => setTask((prev) => ({ ...prev, content }))}
 							plugins={ALL_PLUGINS}
 						/>
 					</Card>

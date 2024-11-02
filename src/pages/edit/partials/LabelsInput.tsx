@@ -1,18 +1,18 @@
 import { FC, useState } from "react";
-import { Note } from "../../../constants/notes";
+import { Task } from "../../../constants/tasks";
 import { Box, Button, Chip, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 export type LabelsInputProps = {
-	note: Note;
-	setNote: React.Dispatch<React.SetStateAction<Note>>;
+	task: Task;
+	setTask: React.Dispatch<React.SetStateAction<Task>>;
 };
 
-export const LabelsInput: FC<LabelsInputProps> = ({ note, setNote }) => {
+export const LabelsInput: FC<LabelsInputProps> = ({ task, setTask }) => {
 	const [newLabel, setNewLabel] = useState("");
 
 	const onAddLabel = () => {
-		setNote((prev) => ({
+		setTask((prev) => ({
 			...prev,
 			labels: [...prev.labels, newLabel],
 		}));
@@ -20,7 +20,7 @@ export const LabelsInput: FC<LabelsInputProps> = ({ note, setNote }) => {
 	};
 
 	const onDeleteLebel = (label: string) => {
-		setNote((prev) => ({
+		setTask((prev) => ({
 			...prev,
 			labels: prev.labels.filter((l) => l !== label),
 		}));
@@ -29,7 +29,7 @@ export const LabelsInput: FC<LabelsInputProps> = ({ note, setNote }) => {
 	return (
 		<Box display="flex" width={1} alignItems="center" gap={1}>
 			<Typography fontWeight="bolt">Labels: </Typography>
-			{note.labels.map((label) => (
+			{task.labels.map((label) => (
 				<Chip key={label} label={label} onDelete={() => onDeleteLebel(label)} />
 			))}
 			<TextField
