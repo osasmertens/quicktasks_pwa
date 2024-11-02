@@ -10,7 +10,7 @@ const createNewTask = (): Task => ({
 	completed: false,
 });
 
-export const getTask = (id: string | undefined, userId: number): Task => {
+export const getTask = (id: string | undefined, userId: string): Task => {
 	if (!id || id === "new") {
 		return createNewTask();
 	}

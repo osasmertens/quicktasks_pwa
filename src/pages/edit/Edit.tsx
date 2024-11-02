@@ -16,12 +16,12 @@ import { TaskCompleteInput } from "./partials/TaskCompleteInput";
 export const EditPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
 	const { user } = useUserContext();
-	const [task, setTask] = useState<Task>(getTask(id, user?.userId ?? 0));
-	const userNotes = getTasksOfUser(user?.userId ?? 0);
+	const [task, setTask] = useState<Task>(getTask(id, user?.uid ?? "0"));
+	const userNotes = getTasksOfUser(user?.uid ?? "0");
 	const navigate = useNavigate();
 
 	function onSave(): void {
-		const userId = user?.userId ?? "0";
+		const userId = user?.uid ?? "0";
 		const storedTasks = JSON.parse(
 			localStorage.getItem("tasks") || "{}"
 		) as TasksOfUser;

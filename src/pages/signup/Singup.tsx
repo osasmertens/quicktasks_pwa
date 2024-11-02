@@ -1,13 +1,13 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../providers/UserProvider";
 
-export const LoginPage: FC = () => {
+export const SignupPage: FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string>();
-	const { user, login } = useUserContext();
+	const { user, signup } = useUserContext();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -16,12 +16,14 @@ export const LoginPage: FC = () => {
 		}
 	}, [user, navigate]);
 
-	const onLogin = async () => {
-		setError(undefined);
-		const result = await login(email, password);
+	const onSignup = async () => {
+		const result = await signup(email, password);
+		console.log("Signup", email, password);
 		if (result.error) {
 			setError(result.error);
+			console.error(result.error);
 		}
+
 		if (result.user) {
 			navigate("/");
 		}
@@ -57,6 +59,7 @@ export const LoginPage: FC = () => {
 					borderRadius={4}
 					sx={{ background: "white" }}
 				>
+					<Typography variant="h2">Sign up</Typography>
 					<Box
 						component={"img"}
 						src={"https://cdn-icons-png.freepik.com/512/3982/3982361.png"}
@@ -83,14 +86,9 @@ export const LoginPage: FC = () => {
 						value={password}
 						onChange={(event) => setPassword(event.target.value)}
 					/>
-					<Button variant="contained" fullWidth size="large" onClick={onLogin}>
-						Login
+					<Button variant="contained" fullWidth size="large" onClick={onSignup}>
+						Sign up
 					</Button>
-					<Link style={{ textDecoration: 0 }} to={"/signup"}>
-						<Button variant="contained" fullWidth size="large">
-							Sign up
-						</Button>
-					</Link>
 				</Box>
 			</Box>
 		</Box>

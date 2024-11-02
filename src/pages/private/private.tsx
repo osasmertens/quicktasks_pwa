@@ -3,10 +3,8 @@ import {
 	Box,
 	Button,
 	CircularProgress,
-	IconButton,
 	Toolbar,
 	Typography,
-	Icon,
 } from "@mui/material";
 import { FC, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -48,7 +46,7 @@ export const PrivateRoute: FC = () => {
 						QuickTasks
 					</Typography>
 					<Typography variant="body1" sx={{ margin: 2 }}>
-						{user?.firstName + " " + user?.lastName}
+						{user?.email}
 					</Typography>
 					<Button
 						color="inherit"

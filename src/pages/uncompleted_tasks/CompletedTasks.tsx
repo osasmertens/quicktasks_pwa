@@ -9,7 +9,7 @@ export const CompletedPage: FC = () => {
 	const navigate = useNavigate();
 	const { user } = useUserContext();
 
-	const tasks = getTasksOfUser(user?.userId ?? 0);
+	const tasks = getTasksOfUser(user?.uid ?? "0");
 	//console.log(notes);
 
 	return (

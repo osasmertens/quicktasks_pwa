@@ -8,5 +8,5 @@ export type Task = {
 };
 
 export type TasksOfUser = {
-	[userId: number]: Task[];
+	[userId: string]: Task[];
 };

@@ -6,13 +6,23 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { User, users } from "../constants/users";
+import {
+	createUserWithEmailAndPassword,
+	onAuthStateChanged,
+	signInWithEmailAndPassword,
+	User,
+} from "firebase/auth";
+import { firebaseAuth } from "../firebase/config";
 
 export type UserContextType = {
 	user?: User;
 	isLoading: boolean;
+	signup: (
+		email: string,
+		password: string
+	) => Promise<{ user?: User; error?: string }>;
 	login: (
-		userName: string,
+		email: string,
 		password: string
 	) => Promise<{ user?: User; error?: string }>;
 	logout: () => Promise<void>;
@@ -20,6 +30,7 @@ export type UserContextType = {
 
 const UserContext = createContext<UserContextType>({
 	login: async () => ({}),
+	signup: async () => ({}),
 	logout: async () => {},
 	isLoading: true,
 });
@@ -29,40 +40,63 @@ export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const userId = localStorage.getItem("userId");
-
-		if (userId) {
-			const user = users.find((user) => user.userId.toString() === userId);
-		}
-
-		setIsLoading(false);
+		onAuthStateChanged(firebaseAuth, (user) => {
+			setIsLoading(false);
+			if (user) {
+				setUser(user);
+			} else {
+				setUser(undefined);
+			}
+		});
 	}, []);
 
-	const login = async (
-		userName: string,
+	const signup = async (
+		email: string,
 		password: string
 	): Promise<{ user?: User; error?: string }> => {
-		const user = users.find(
-			(user) => user.username === userName && user.password === password
-		);
+		try {
+			console.log("reached signup function");
+			console.log("reached");
+			const userCredential = await createUserWithEmailAndPassword(
+				firebaseAuth,
+				email,
+				password
+			);
 
-		if (!user) {
-			return { error: "Invalid username or password" };
+			setUser(userCredential.user);
+			return { user: userCredential.user };
+		} catch (error) {
+			console.log(error);
+			return { error: (error as { message: string; code: string }).message };
 		}
+	};
 
-		localStorage.setItem("userId", user.userId.toString());
-		setUser(user);
-		return {
-			user: user,
-		};
+	const login = async (
+		email: string,
+		password: string
+	): Promise<{ user?: User; error?: string }> => {
+		try {
+			console.log("reached login function");
+			const userCredential = await signInWithEmailAndPassword(
+				firebaseAuth,
+				email,
+				password
+			);
+
+			setUser(userCredential.user);
+			return { user: userCredential.user };
+		} catch (error) {
+			console.log(error);
+			return { error: (error as { message: string; code: string }).message };
+		}
 	};
 
 	const logout = async () => {
-		localStorage.removeItem("userId");
+		await firebaseAuth.signOut();
 		setUser(undefined);
 	};
 
-	const value: UserContextType = { user, isLoading, login, logout };
+	const value: UserContextType = { user, isLoading, signup, login, logout };
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
