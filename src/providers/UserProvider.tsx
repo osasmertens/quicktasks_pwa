@@ -92,6 +92,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	};
 
 	const logout = async () => {
+		localStorage.removeItem(`notificationShown_${user?.uid}`);
 		await firebaseAuth.signOut();
 		setUser(undefined);
 	};

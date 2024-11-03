@@ -6,14 +6,15 @@ import { getTasksOfUser } from "./helpers/getTasksOfUser";
 import { useUserContext } from "../../providers/UserProvider";
 import { TaskDetail } from "./partials/TaskDetail";
 import { isThisWeek, isToday } from "./helpers/dateFunctions";
+import { TaskNotificationScheduler } from "../../notifications/notifications";
 
 export const HomePage: FC = () => {
 	const navigate = useNavigate();
 	const { user } = useUserContext();
 
 	const tasks = getTasksOfUser(user?.uid ?? "0");
-	//console.log(notes);
 
+	TaskNotificationScheduler(user);
 	return (
 		<Box
 			display="flex"
