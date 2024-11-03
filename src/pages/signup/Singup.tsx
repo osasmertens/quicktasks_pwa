@@ -59,7 +59,7 @@ export const SignupPage: FC = () => {
 					borderRadius={4}
 					sx={{ background: "white" }}
 				>
-					<Typography variant="h2">Sign up</Typography>
+					<Typography variant="h4">Sign up</Typography>
 					<Box
 						component={"img"}
 						src={"https://cdn-icons-png.freepik.com/512/3982/3982361.png"}

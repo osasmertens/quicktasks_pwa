@@ -1,9 +1,38 @@
 {
 	"short_name": "QuickTasks",
 	"name": "QuickTasks",
-	"icons": [],
-	"start_url": ".",
-	"display": "fullscreen",
+	"icons": [
+		{
+			"src": "logo-144.png",
+			"sizes": "144x144",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "manifest-icon-192.maskable.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "manifest-icon-512.maskable.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "apple-splash-640-1136.jpg",
+			"sizes": "640x1136",
+			"type": "image/jpg",
+			"form_factor": "wide",
+			"label": "QuickTasks"
+		}
+	],
+	"description": "A web application to store your tasks and check them off when completed.",
+	"start_url": "/",
+	"display": "standalone",
 	"orientation": "portrait",
 	"theme_color": "#000000",
 	"background_color": "#ffffff"

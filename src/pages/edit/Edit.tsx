@@ -12,6 +12,8 @@ import { useUserContext } from "../../providers/UserProvider";
 import { getTasksOfUser } from "../home/helpers/getTasksOfUser";
 import { DueDateInput } from "./partials/DueDateInput";
 import { TaskCompleteInput } from "./partials/TaskCompleteInput";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export const EditPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -66,10 +68,11 @@ export const EditPage: FC = () => {
 				<TaskCompleteInput task={task} setTask={setTask} />
 				<Box flexGrow={1} marginTop={2}>
 					<Card sx={{ height: 1 }}>
-						<MDXEditor
-							markdown={task.content}
+						<ReactQuill
+							theme="snow"
+							value={task.content}
 							onChange={(content) => setTask((prev) => ({ ...prev, content }))}
-							plugins={ALL_PLUGINS}
+							style={{ height: 300 }}
 						/>
 					</Card>
 				</Box>

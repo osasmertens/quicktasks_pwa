@@ -57,6 +57,7 @@ export const LoginPage: FC = () => {
 					borderRadius={4}
 					sx={{ background: "white" }}
 				>
+					<Typography variant="h4">Login</Typography>
 					<Box
 						component={"img"}
 						src={"https://cdn-icons-png.freepik.com/512/3982/3982361.png"}
@@ -83,14 +84,16 @@ export const LoginPage: FC = () => {
 						value={password}
 						onChange={(event) => setPassword(event.target.value)}
 					/>
-					<Button variant="contained" fullWidth size="large" onClick={onLogin}>
-						Login
-					</Button>
-					<Link style={{ textDecoration: 0 }} to={"/signup"}>
-						<Button variant="contained" fullWidth size="large">
-							Sign up
+					<Box display="flex" gap={2}>
+						<Button variant="contained" size="large" onClick={onLogin}>
+							Login
 						</Button>
-					</Link>
+						<Link style={{ textDecoration: 0 }} to={"/signup"}>
+							<Button variant="contained" size="large">
+								Sign up
+							</Button>
+						</Link>
+					</Box>
 				</Box>
 			</Box>
 		</Box>
