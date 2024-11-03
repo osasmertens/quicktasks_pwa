@@ -27,7 +27,7 @@ export const CompletedPage: FC = () => {
 					alignItems="center"
 					margin={2}
 				>
-					<Typography variant="h3">Tasks</Typography>
+					<Typography variant="h3">Completed tasks</Typography>
 				</Box>
 				<Box display="flex" flexDirection="column" marginTop={2}>
 					{tasks
