@@ -10,7 +10,7 @@ const showNotification = (taskCount: number) => {
 	navigator.serviceWorker.ready.then((registration) => {
 		registration.showNotification("QuickTasks", {
 			body: `You have ${taskCount} tasks left to complete!`,
-			icon: "/public/logo-144.png",
+			icon: "%PUBLIC_URL%/logo-144.png",
 		});
 	});
 };
